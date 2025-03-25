@@ -8,6 +8,7 @@ import os
 # Path to the JSON file
 
 tempPath = "database.json"
+
 # Get the directory where the script is running from
 if getattr(sys, 'frozen', False):
     # Running as a PyInstaller bundle
@@ -19,6 +20,7 @@ else:
 # Path to the JSON file
 tempPath = os.path.join(bundle_dir, 'database.json')
 steel_data='';
+
 # Load JSON data from file
 def load_json(filename=tempPath):
     try:
@@ -54,10 +56,7 @@ def on_button_click(event):
    matches = difflib.get_close_matches(left_input, sizes, n=20, cutoff=0.3)  
        # Format the result as a vertical list
    result_text.delete(0, tk.END)
-    # Add the filtered matches to the result list
 
- # Format the result as a vertical list
-   result_text.delete(0, tk.END)
    if matches:
         for match in matches:
             if isinstance(steel_data[category][match], dict):
@@ -80,6 +79,11 @@ def on_button_click(event):
     
     # Display the result in the right input box
 # Function to copy selected weight to clipboard
+def topBoard():
+    text=''
+    for category in steel_data.keys():
+        text+=f"{category}  "
+    return text
 def copy_to_clipboard(event):
     selected = result_text.get(tk.ACTIVE)
     if selected:
@@ -108,7 +112,10 @@ left_entry.focus_set()
 # Scrollbar
 scrollbar = tk.Scrollbar(root)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
+# Create keywords label
+text=topBoard()
+keywords_label = tk.Label(root, text=text)
+keywords_label.pack()
 # Create output label and text box for results on the right
 right_label = tk.Label(root, text="Matching Results:")
 right_label.pack()
