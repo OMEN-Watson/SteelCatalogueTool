@@ -5,6 +5,9 @@ import json
 import difflib
 import sys
 import os
+
+# 打包代码：pyinstaller --onefile --windowed --add-data "database.json;." windowPop.py
+
 # Path to the JSON file
 
 tempPath = "database.json"
