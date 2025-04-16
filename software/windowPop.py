@@ -22,7 +22,7 @@ else:
 
 # Path to the JSON file
 tempPath = os.path.join(bundle_dir, 'database.json')
-steel_data='';
+steel_data=''
 
 # Load JSON data from file
 def load_json(filename=tempPath):
