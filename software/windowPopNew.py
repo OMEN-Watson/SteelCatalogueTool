@@ -55,16 +55,29 @@ def on_button_click(event):
     # left_input_list = left_input.split()
     # Extract all number substrings using regex
     left_input_list = re.findall(r"\d+", left_input)
+    
     # result_text.delete("1.0", tk.END)  # Clear Text widget
 
     # Determine the steel type (e.g., PFC or SHS)
     steel_type = None
+    categories_to_search=[]
     for category in steel_data.keys():
         if category in left_input:
             steel_type = category
             left_input = left_input.replace(category, "")
+            categories_to_search = [steel_type]
             break
-    # if not steel_type:
+
+    if not steel_type:
+        letters = re.findall(r'[A-Za-z]+', left_input)
+        if len(letters)>0:
+            letters=letters[0]
+            for category in steel_data.keys(): 
+                if letters in category:
+                    categories_to_search.append(category)
+                    steel_type = category
+                    
+        
 
     # Clear previous output
     result_text.delete(0, tk.END)
@@ -72,9 +85,9 @@ def on_button_click(event):
     # If a specific steel type was detected, search only in that category
 
     index = 0
-    if steel_type:
-        categories_to_search = [steel_type]
-    else:
+    # if steel_type:
+        # categories_to_search = [steel_type]
+    if not steel_type:
         # If no steel type found, search all
         categories_to_search = steel_data.keys()
     data = [0] * len(categories) 
