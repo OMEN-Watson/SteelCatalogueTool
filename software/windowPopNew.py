@@ -64,6 +64,7 @@ def on_button_click(event):
             steel_type = category
             left_input = left_input.replace(category, "")
             break
+    # if not steel_type:
 
     # Clear previous output
     result_text.delete(0, tk.END)
@@ -117,6 +118,7 @@ def copy_to_clipboard(event):
         root.clipboard_clear()
         root.clipboard_append(weight)
         root.update()
+        left_entry.focus_set()
 
 def center_window(win, width=400, height=300):
     screen_width = win.winfo_screenwidth()
@@ -126,8 +128,9 @@ def center_window(win, width=400, height=300):
     win.geometry(f"{width}x{height}+{x}+{y}")
 
 # 🚨 Clear Button
-def clear_input():
+def clear_input(event):
     left_entry.delete(0, tk.END)
+    left_entry.focus_set()
 
 steel_data = load_json(tempPath)
 categories = list(steel_data.keys())  # Convert keys to a list
@@ -146,6 +149,7 @@ topBoard()
 # Create a frame to hold the input boxes and the button
 frame = tk.Frame(root)
 frame.pack(pady=20)
+root.bind("<Escape>", clear_input)
 
 # Create and place the left input box
 left_entry = tk.Entry(frame, width=20)
@@ -155,8 +159,8 @@ left_entry.focus_set()
 
 # 🚨 Clear Button
 
-clear_button = tk.Button(frame, text="Clear", command=clear_input)
-clear_button.grid(row=0, column=5, padx=5)
+# clear_button = tk.Button(frame, text="Clear", command=clear_input)
+# clear_button.grid(row=0, column=5, padx=5)
 
 # Scrollbar
 scrollbar = tk.Scrollbar(root)
@@ -166,8 +170,8 @@ scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
 
 # Create output label and text box for results on the right
-right_label = tk.Label(root, text="Matching Results:")
-right_label.pack()
+# right_label = tk.Label(root, text="Matching Results:")
+# right_label.pack()
 result_text = tk.Listbox(root, height=10, width=40,yscrollcommand=scrollbar.set)
 result_text.pack(padx=10, pady=5, fill=tk.BOTH, expand=True)
 scrollbar.config(command=result_text.yview)
