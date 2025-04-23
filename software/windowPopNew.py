@@ -118,7 +118,16 @@ def copy_to_clipboard(event):
         root.clipboard_append(weight)
         root.update()
 
+def center_window(win, width=400, height=300):
+    screen_width = win.winfo_screenwidth()
+    screen_height = win.winfo_screenheight()
+    x = (screen_width // 2) - (width // 2)
+    y = (screen_height // 2) - (height // 2)
+    win.geometry(f"{width}x{height}+{x}+{y}")
 
+# 🚨 Clear Button
+def clear_input():
+    left_entry.delete(0, tk.END)
 
 steel_data = load_json(tempPath)
 categories = list(steel_data.keys())  # Convert keys to a list
@@ -127,6 +136,8 @@ category_labels = {}
 
 # Create the main window
 root = tk.Tk()
+
+center_window(root, 400, 300)
 root.title("Custom Window with Input Boxes")
 root.geometry("400x300")  # Width x Height
 # Create keywords label
@@ -141,9 +152,16 @@ left_entry = tk.Entry(frame, width=20)
 left_entry.grid(row=0, column=0, padx=10)  # Left position in the grid
 left_entry.bind("<KeyRelease>", on_button_click)  # Bind key release event
 left_entry.focus_set()
+
+# 🚨 Clear Button
+
+clear_button = tk.Button(frame, text="Clear", command=clear_input)
+clear_button.grid(row=0, column=5, padx=5)
+
 # Scrollbar
 scrollbar = tk.Scrollbar(root)
 scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
 
 
 
