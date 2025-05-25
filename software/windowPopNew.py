@@ -117,7 +117,7 @@ def label_clicked(event, category):
     current_text = left_entry.get().strip()
     
     # Remove only existing category letters (e.g., PFC, UA) — not numbers like 150x75
-    letters = re.sub(r'[A-Za-z]+','',current_text)
+    letters = re.sub(r'[A-Za-z]+','',current_text).strip()
     letters += f" {category}"
     left_entry.delete(0, tk.END)
     left_entry.insert(0, letters)
