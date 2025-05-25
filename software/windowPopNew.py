@@ -95,7 +95,7 @@ def on_button_click(event):
     for category in categories_to_search:
         for section, weight in steel_data[category].items():
             if all(num in section for num in left_input_list):
-                result_text.insert(tk.END, f"{section} ({category}): {weight} kg/m\n")
+                result_text.insert(tk.END, f"{section} ({category}): \t {weight} kg/m\n")
              
                 result_text.itemconfig(index, bg=colors[categories.index(category)])  # moccasin
                 index += 1
@@ -113,7 +113,15 @@ def on_button_click(event):
 
 
 
-
+def label_clicked(event, category):
+    current_text = left_entry.get().strip()
+    
+    # Remove only existing category letters (e.g., PFC, UA) — not numbers like 150x75
+    letters = re.sub(r'[A-Za-z]+','',current_text)
+    letters += f" {category}"
+    left_entry.delete(0, tk.END)
+    left_entry.insert(0, letters)
+    on_button_click(None)
 # Function to copy selected weight to clipboard
 def topBoard():
         # Create a frame at the top for the category labels
@@ -123,6 +131,8 @@ def topBoard():
     for i, category in enumerate(categories):
         label = tk.Label(label_frame, text=category, bg=colors[i], font=("Arial", 12, "bold"))
         label.pack(side="left", padx=5)
+        # bind the click command
+        label.bind("<Button-1>", lambda e, cat=category: label_clicked(e, cat))
         category_labels[category] = label  # Store reference
 def copy_to_clipboard(event):
     selected = result_text.get(tk.ACTIVE)
@@ -154,7 +164,7 @@ category_labels = {}
 root = tk.Tk()
 
 center_window(root, 400, 300)
-root.title("Custom Window with Input Boxes")
+root.title("Feynman Tool")
 root.geometry("400x300")  # Width x Height
 # Create keywords label
 topBoard()
