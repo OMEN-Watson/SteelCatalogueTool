@@ -171,7 +171,7 @@ topBoard()
 
 # Create a frame to hold the input boxes and the button
 frame = tk.Frame(root)
-frame.pack(pady=20)
+frame.pack(pady=5)
 root.bind("<Escape>", clear_input)
 
 # Create and place the left input box
@@ -195,7 +195,7 @@ scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 # Create output label and text box for results on the right
 # right_label = tk.Label(root, text="Matching Results:")
 # right_label.pack()
-result_text = tk.Listbox(root, height=10, width=40,yscrollcommand=scrollbar.set)
+result_text = tk.Listbox(root, height=10, width=40, font=("Arial", 12),yscrollcommand=scrollbar.set)
 result_text.pack(padx=10, pady=5, fill=tk.BOTH, expand=True)
 scrollbar.config(command=result_text.yview)
 result_text.bind("<Double-Button-1>", copy_to_clipboard)  # Copy on double-click
