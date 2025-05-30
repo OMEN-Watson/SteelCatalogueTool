@@ -116,7 +116,7 @@ widget_to_category = {}
 def on_label_hover_enter(event):
     widget = event.widget
     # widget.config(bg="gold", font=("Arial", 12, "bold"), relief="raised", bd=1)
-    widget.config(bg="gold", font=("Arial", 12), relief="flat")
+    widget.config(bg="gold", relief="flat")
 
 
 
