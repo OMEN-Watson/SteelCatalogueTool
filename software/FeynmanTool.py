@@ -111,7 +111,21 @@ def on_button_click(event):
              oneLabel.config(bg="SystemButtonFace",borderwidth=0, relief="flat")
         else: oneLabel.config(bg=colors[num],borderwidth=2, relief="solid")
 
+#region label
+widget_to_category = {}
+def on_label_hover_enter(event):
+    widget = event.widget
+    # widget.config(bg="gold", font=("Arial", 12, "bold"), relief="raised", bd=1)
+    widget.config(bg="gold", font=("Arial", 12), relief="flat", bd=1)
 
+
+
+def on_label_hover_leave(event):
+    category = widget_to_category[event.widget]
+    index = categories.index(category)
+    widget = event.widget
+    # widget.config(bg=colors[index], font=("Arial", 12, "bold"), relief="flat", bd=0)
+    on_button_click(None)  
 
 def label_clicked(event, category):
     current_text = left_entry.get().strip()
@@ -121,7 +135,10 @@ def label_clicked(event, category):
     letters += f" {category}"
     left_entry.delete(0, tk.END)
     left_entry.insert(0, letters)
-    on_button_click(None)
+    on_button_click(None)    
+#endregion
+
+
 # Function to copy selected weight to clipboard
 def topBoard():
         # Create a frame at the top for the category labels
@@ -134,6 +151,10 @@ def topBoard():
         # bind the click command
         label.bind("<Button-1>", lambda e, cat=category: label_clicked(e, cat))
         category_labels[category] = label  # Store reference
+
+        widget_to_category[label] = category# label animation
+        label.bind("<Enter>", on_label_hover_enter)
+        label.bind("<Leave>", on_label_hover_leave)
 def copy_to_clipboard(event):
     selected = result_text.get(tk.ACTIVE)
     if selected:
@@ -157,6 +178,7 @@ def clear_input(event):
 
 steel_data = load_json(tempPath)
 categories = list(steel_data.keys())  # Convert keys to a list
+data = [0] * len(categories) 
 # Dictionary to hold label references
 category_labels = {}
 
