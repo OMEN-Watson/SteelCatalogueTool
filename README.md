@@ -2,7 +2,7 @@
 
 # SteelCatalogueTool
 it's a tiny app for Mass during the steel structure quote <br>
-the PC software path:**software/dist/FeynmanTool.exe** <br>
+ <br>
 
  <br>
 usage: u could type in the keywords like "89 89 shs",<br>
