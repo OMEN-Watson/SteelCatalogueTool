@@ -11,6 +11,7 @@ import re
 # C:\Users\GERRY\AppData\Local\Packages\PythonSoftwareFoundation.Python.3.11_qbz5n2kfra8p0\LocalCache\local-packages\Python311\Scripts\pyinstaller.exe --onefile --windowed --add-data "database.json;." FeynmanTool.py
 # Path to the JSON file
 
+
 tempPath = "database.json"
 colors = [
     "#FFE4B5",  # Moccasin
@@ -50,6 +51,8 @@ def load_json(filename=tempPath):
         return {}
     
 def on_button_click(event):
+    if myVariable>0:
+        return
     left_input = left_entry.get().upper().replace("*", "x").replace("X", "x").strip()
     # Prepare the input numbers list
     # left_input_list = left_input.split()
@@ -175,7 +178,10 @@ def center_window(win, width=400, height=300):
 def clear_input(event):
     left_entry.delete(0, tk.END)
     left_entry.focus_set()
+    global myVariable
+    myVariable-=1
 
+myVariable=int(3) 
 steel_data = load_json(tempPath)
 categories = list(steel_data.keys())  # Convert keys to a list
 data = [0] * len(categories) 
